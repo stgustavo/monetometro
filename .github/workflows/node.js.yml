@@ -20,17 +20,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
-    - run: |
+    - name: Set up Node.js ${{ matrix.node-version }}
+      run: |
+        cd frontend
+        nvm install ${{ matrix.node-version }}
+        nvm use ${{ matrix.node-version }}
+    - name: Install Yarn
+      run: |
+        cd frontend
+        npm install -g yarn
+    - name: Install dependencies
+      run: |
         cd frontend
         yarn install
-    - run: |
+    - name: Build
+      run: |
         cd frontend
         yarn build --if-present
-    - run: |
+    - name: Test
+      run: |
         cd frontend
         yarn test
