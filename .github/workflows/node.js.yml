@@ -24,16 +24,13 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        cache: 'yarn'
     - run: |
         cd frontend
-        npm install
+        yarn install
     - run: |
         cd frontend
-        npm ci
+        yarn build --if-present
     - run: |
         cd frontend
-        npm run build --if-present
-    - run: |
-        cd frontend
-        npm test
+        yarn test
